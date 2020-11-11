@@ -21,21 +21,34 @@ namespace ToDoApi.Controllers
             _repository = repository;
         }
 
-        public ActionResult<Person> AddNewPerson(string personNick)
+        [HttpPost("AddNewPerson")]
+        public ActionResult<Person> AddNewPerson(Person person)
         {
-            return new Person();
+            _repository.AddNewPerson(person);
+            _repository.SaveChanges();
+            return CreatedAtRoute(GetPersonById(person.Id), person);
         }
 
+        private ActionResult<Person> GetPersonById(int id)
+        {
+            var person = _repository.GetPersonById(id);
+            if (person is null) return NotFound();
+            return person;
+        }
+
+        [HttpGet("GetTasks/{personNick}")]
         public ActionResult<IEnumerable<PlannedTask>> GetPersonsPlannedTasks(string personNick)
         {
             return new LinkedList<PlannedTask>();
         }
 
+        [HttpGet("GetTasks/{personNick}/{state}")]
         public ActionResult<IEnumerable<PlannedTask>> GetPersonsPlannedTasksByGivenState(string personNick, string state)
         {
             return new LinkedList<PlannedTask>();
         }
 
+        [HttpPost("CreateTask/{personNick}")]
         public ActionResult<PlannedTask> CreatePersonalTask(string personNick, PlannedTask plannedTask)
         {
             return new PlannedTask();
