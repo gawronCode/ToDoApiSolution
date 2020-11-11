@@ -13,9 +13,6 @@ namespace ToDoApi.Models
         [Required]
         [MaxLength(128)]
         public string Name { get; set; }
-
-        [Required]
-        public string AccountPassword { get; set; }
-
+        
     }
 }
