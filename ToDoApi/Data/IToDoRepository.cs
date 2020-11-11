@@ -10,11 +10,11 @@ namespace ToDoApi.Data
     {
         public bool SaveChanges();
         public void AddNewPerson(Person person);
-        public IEnumerable<PlannedTask> GetPersonsPlannedTasks(Person person);
-        public IEnumerable<PlannedTask> GetPersonsPlannedTasksByGivenState(Person person, string state);
-        public void CreatePersonalTask(Person person, PlannedTask plannedTask);
-        public void UpdatePersonalTask(Person person, PlannedTask plannedTask);
-        public void DeletePersonalTask(Person person, PlannedTask plannedTask);
+        public IEnumerable<PlannedTask> GetPersonsPlannedTasks(string person);
+        public IEnumerable<PlannedTask> GetPersonsPlannedTasksByGivenState(string person, string state);
+        public void CreatePersonalTask(string personNick, PlannedTask plannedTask);
+        public void UpdatePersonalTask(string personNick, PlannedTask plannedTask);
+        public void DeletePersonalTask(string personNick, PlannedTask plannedTask);
 
 
     }
