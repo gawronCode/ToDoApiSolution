@@ -11,6 +11,8 @@ namespace ToDoApi.Data
         public bool SaveChanges();
         public void AddNewPerson(Person person);
         public Person GetPersonById(int id);
+        public Person GetPersonByName(string name);
+        public State GetStateByName(string name);
         public IEnumerable<PlannedTask> GetPersonsPlannedTasks(string person);
         public IEnumerable<PlannedTask> GetPersonsPlannedTasksByGivenState(string person, string state);
         public void CreatePersonalTask(string personNick, PlannedTask plannedTask);

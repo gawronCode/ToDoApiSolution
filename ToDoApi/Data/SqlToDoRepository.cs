@@ -27,6 +27,16 @@ namespace ToDoApi.Data
             return _context.Person.FirstOrDefault(p => p.Id == id);
         }
 
+        public Person GetPersonByName(string name)
+        {
+            return _context.Person.FirstOrDefault(p => p.Name == name);
+        }
+
+        public State GetStateByName(string name)
+        {
+            return _context.State.FirstOrDefault(p => p.Name == name);
+        }
+
         public void CreatePersonalTask(string personNick, PlannedTask plannedTask)
         {
             throw new NotImplementedException();
