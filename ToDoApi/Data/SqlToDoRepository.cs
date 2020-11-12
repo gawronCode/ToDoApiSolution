@@ -49,7 +49,7 @@ namespace ToDoApi.Data
 
         public bool SaveChanges()
         {
-            throw new NotImplementedException();
+            return (_context.SaveChanges() >= 0);
         }
 
         public void UpdatePersonalTask(string personNick, PlannedTask plannedTask)

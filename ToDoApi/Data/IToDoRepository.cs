@@ -17,6 +17,5 @@ namespace ToDoApi.Data
         public void UpdatePersonalTask(string personNick, PlannedTask plannedTask);
         public void DeletePersonalTask(string personNick, PlannedTask plannedTask);
 
-
     }
 }

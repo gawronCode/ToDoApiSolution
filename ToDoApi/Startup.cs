@@ -29,6 +29,7 @@ namespace ToDoApi
         {
             services.AddDbContext<ToDoApiContext>(opt => opt.UseSqlServer(GetConnectionString()));
             services.AddControllers();
+            services.AddScoped<IToDoRepository, SqlToDoRepository>();
         }
 
         private string GetConnectionString()

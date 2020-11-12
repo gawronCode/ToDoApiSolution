@@ -9,18 +9,18 @@ using ToDoApi.Models;
 namespace ToDoApi.Controllers
 {
 
-    [Microsoft.AspNetCore.Components.Route("api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class ClientController : ControllerBase
+    public class ToDoController : ControllerBase
     {
 
         private readonly IToDoRepository _repository;
 
-        public ClientController(IToDoRepository repository)
+        public ToDoController(IToDoRepository repository)
         {
             _repository = repository;
         }
-
+        
         [HttpPost("AddNewPerson")]
         public ActionResult<Person> AddNewPerson(Person person)
         {
@@ -54,11 +54,12 @@ namespace ToDoApi.Controllers
             return new PlannedTask();
         }
 
+        [NonAction]
         public void UpdatePersonalTask(string personNick, PlannedTask plannedTask)
         {
 
         }
-
+        [NonAction]
         public void DeletePersonalTask(string person, PlannedTask plannedTask)
         {
 
