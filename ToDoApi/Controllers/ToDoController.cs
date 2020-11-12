@@ -38,15 +38,19 @@ namespace ToDoApi.Controllers
         }
 
         [HttpGet("GetTasks/{personNick}")]
-        public ActionResult<IEnumerable<PlannedTask>> GetPersonsPlannedTasks(string personNick)
+        public ActionResult<IEnumerable<PlannedTaskRead>> GetPersonsPlannedTasks(string personNick)
         {
-            return new LinkedList<PlannedTask>();
+            var tasks = _repository.GetPersonsPlannedTasks(personNick);
+            if (!tasks.Any()) return NotFound();
+            return Ok(tasks);
         }
 
-        [HttpGet("GetTasks/{personNick}/{state}")]
-        public ActionResult<IEnumerable<PlannedTask>> GetPersonsPlannedTasksByGivenState(string personNick, string state)
+        [HttpGet("GetTasks/{personNick}/{stateNameCode}")]
+        public ActionResult<IEnumerable<PlannedTaskRead>> GetPersonsPlannedTasksByGivenState(string personNick, string stateNameCode)
         {
-            return new LinkedList<PlannedTask>();
+            var tasks = _repository.GetPersonsPlannedTasksByGivenState(personNick, stateNameCode);
+            if (!tasks.Any()) return NotFound();
+            return Ok(tasks);
         }
 
         [HttpPost("CreateTask")]

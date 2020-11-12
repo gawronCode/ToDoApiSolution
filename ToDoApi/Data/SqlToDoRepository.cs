@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using ToDoApi.Dtos;
 using ToDoApi.Models;
 
 namespace ToDoApi.Data
@@ -27,14 +29,14 @@ namespace ToDoApi.Data
             return _context.Person.FirstOrDefault(p => p.Id == id);
         }
 
-        public Person GetPersonByName(string name)
+        public Person GetPersonByName(string personName)
         {
-            return _context.Person.FirstOrDefault(p => p.Name == name);
+            return _context.Person.FirstOrDefault(p => p.Name == personName);
         }
 
-        public State GetStateByName(string name)
+        public State GetStateByName(string personName)
         {
-            return _context.State.FirstOrDefault(p => p.Name == name);
+            return _context.State.FirstOrDefault(p => p.Name == personName);
         }
 
         public void CreatePersonalTask(PlannedTask plannedTask)
@@ -48,14 +50,41 @@ namespace ToDoApi.Data
             throw new NotImplementedException();
         }
 
-        public IEnumerable<PlannedTask> GetPersonsPlannedTasks(string person)
+        public IEnumerable<PlannedTaskRead> GetPersonsPlannedTasks(string personName)
         {
-            throw new NotImplementedException();
+            return from p in _context.PlannedTask 
+                orderby p.DueDate 
+                where p.Person.Name == personName 
+                select new PlannedTaskRead() 
+                {
+                    Id = p.Id, 
+                    Description = p.Description, 
+                    DueDate = p.DueDate, 
+                    State = p.State.Name
+                };
         }
 
-        public IEnumerable<PlannedTask> GetPersonsPlannedTasksByGivenState(string person, string state)
+        public IEnumerable<PlannedTaskRead> GetPersonsPlannedTasksByGivenState(string personName, string stateNameCode)
         {
-            throw new NotImplementedException();
+            return from p in _context.PlannedTask
+                orderby p.DueDate
+                where p.Person.Name == personName && p.State.Name == GetStateNameByCode(stateNameCode)
+                select new PlannedTaskRead()
+                {
+                    Id = p.Id,
+                    Description = p.Description,
+                    DueDate = p.DueDate,
+                    State = p.State.Name
+                };
+        }
+
+        private string GetStateNameByCode(string stateNameCode)
+        {
+            if (stateNameCode == "ToDo") return "To Do";
+            if (stateNameCode == "InProgress") return "In Progress";
+            if (stateNameCode == "Done") return "Done";
+
+            return String.Empty;
         }
 
         public bool SaveChanges()
