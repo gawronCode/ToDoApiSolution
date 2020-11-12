@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ToDoApi.Data;
+using ToDoApi.Dtos;
 using ToDoApi.Models;
 
 namespace ToDoApi.Controllers
@@ -48,10 +49,26 @@ namespace ToDoApi.Controllers
             return new LinkedList<PlannedTask>();
         }
 
-        [HttpPost("CreateTask/{personNick}")]
-        public ActionResult<PlannedTask> CreatePersonalTask(string personNick, PlannedTask plannedTask)
+        [HttpPost("CreateTask")]
+        public ActionResult CreatePersonalTask(PlannedTaskToCreate plannedTask)
         {
-            return new PlannedTask();
+            var person = _repository.GetPersonByName(plannedTask.Person);
+            if (person is null) return NotFound();
+            var state = _repository.GetStateByName(plannedTask.State);
+            if (state is null) return NotFound();
+
+            var newTask = new PlannedTask()
+            {
+                Description = plannedTask.Description,
+                DueDate = plannedTask.DueDate,
+                PersonId = person.Id,
+                StateId = state.Id
+            };
+
+            _repository.CreatePersonalTask(newTask);
+            _repository.SaveChanges();
+            return Ok();
+
         }
 
         [NonAction]

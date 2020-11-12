@@ -37,9 +37,10 @@ namespace ToDoApi.Data
             return _context.State.FirstOrDefault(p => p.Name == name);
         }
 
-        public void CreatePersonalTask(string personNick, PlannedTask plannedTask)
+        public void CreatePersonalTask(PlannedTask plannedTask)
         {
-            throw new NotImplementedException();
+            if(plannedTask is null) throw new ArgumentException(nameof(plannedTask));
+            _context.PlannedTask.Add(plannedTask);
         }
 
         public void DeletePersonalTask(string personNick, PlannedTask plannedTask)
