@@ -80,10 +80,14 @@ namespace ToDoApi.Controllers
         {
 
         }
-        [NonAction]
-        public void DeletePersonalTask(string person, PlannedTask plannedTask)
+        [HttpDelete("Delete/{id}")]
+        public ActionResult DeleteTask(int id)
         {
-
+            var plannedTaskToDelete = _repository.GetPlannedTaskById(id);
+            if (plannedTaskToDelete is null) return NotFound();
+            _repository.DeleteTask(plannedTaskToDelete);
+            _repository.SaveChanges();
+            return Ok();
         }
 
 

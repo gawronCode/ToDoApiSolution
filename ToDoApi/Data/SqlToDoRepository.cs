@@ -45,9 +45,15 @@ namespace ToDoApi.Data
             _context.PlannedTask.Add(plannedTask);
         }
 
-        public void DeletePersonalTask(string personNick, PlannedTask plannedTask)
+        public void DeleteTask(PlannedTask plannedTask)
         {
-            throw new NotImplementedException();
+            if(plannedTask is null) throw new ArgumentException(nameof(plannedTask));
+            _context.PlannedTask.Remove(plannedTask);
+        }
+
+        public PlannedTask GetPlannedTaskById(int id)
+        {
+            return _context.PlannedTask.FirstOrDefault(p => p.Id == id);
         }
 
         public IEnumerable<PlannedTaskRead> GetPersonsPlannedTasks(string personName)
