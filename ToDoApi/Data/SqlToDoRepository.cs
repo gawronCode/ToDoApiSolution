@@ -98,9 +98,21 @@ namespace ToDoApi.Data
             return (_context.SaveChanges() >= 0);
         }
 
-        public void UpdatePersonalTask(string personNick, PlannedTask plannedTask)
+        public void UpdateTask(PlannedTaskUpdate plannedTaskUpdate, PlannedTask plannedTask)
         {
-            throw new NotImplementedException();
+            int stateId;
+            try
+            {
+                stateId = _context.State.FirstOrDefault(p => p.Name == plannedTaskUpdate.State).Id;
+            }
+            catch(ArgumentNullException)
+            {
+                stateId = plannedTask.State.Id;
+            }
+
+            plannedTask.Description = plannedTaskUpdate.Description;
+            plannedTask.DueDate = plannedTaskUpdate.DueDate;
+            plannedTask.StateId = stateId;
         }
     }
 }

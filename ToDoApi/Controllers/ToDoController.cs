@@ -75,11 +75,16 @@ namespace ToDoApi.Controllers
 
         }
 
-        [NonAction]
-        public void UpdatePersonalTask(string personNick, PlannedTask plannedTask)
+        [HttpPatch("Update/{id}")]
+        public ActionResult UpdatePersonalTask(int id, PlannedTaskUpdate plannedTaskUpdate)
         {
-
+            var plannedTaskToUpdate = _repository.GetPlannedTaskById(id);
+            if (plannedTaskToUpdate is null) return NotFound();
+            _repository.UpdateTask(plannedTaskUpdate, plannedTaskToUpdate);
+            _repository.SaveChanges();
+            return Ok();
         }
+
         [HttpDelete("Delete/{id}")]
         public ActionResult DeleteTask(int id)
         {
@@ -89,8 +94,6 @@ namespace ToDoApi.Controllers
             _repository.SaveChanges();
             return Ok();
         }
-
-
 
     }
 }

@@ -17,7 +17,7 @@ namespace ToDoApi.Data
         public IEnumerable<PlannedTaskRead> GetPersonsPlannedTasks(string personName);
         public IEnumerable<PlannedTaskRead> GetPersonsPlannedTasksByGivenState(string personName, string stateNameCode);
         public void CreatePersonalTask(PlannedTask plannedTask);
-        public void UpdatePersonalTask(string personNick, PlannedTask plannedTask);
+        public void UpdateTask(PlannedTaskUpdate plannedTaskUpdate, PlannedTask plannedTask);
         public void DeleteTask(PlannedTask plannedTask);
         public PlannedTask GetPlannedTaskById(int id);
 
